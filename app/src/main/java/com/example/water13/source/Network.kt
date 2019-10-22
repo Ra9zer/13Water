@@ -13,8 +13,13 @@ import java.util.concurrent.TimeUnit
 interface Api {
 
     /* 注册 */
+    @Deprecated(message = "use register2 instead")
     @POST("auth/register")
     fun registerAsync(@Body user: UserDto): Deferred<RegisterResponse>
+
+    /* 注册 */
+    @POST("auth/register2")
+    fun register2Async(@Body registerInfo: RegisterDto): Deferred<RegisterResponse>
 
     /* 登录 */
     @POST("auth/login")
@@ -30,11 +35,16 @@ interface Api {
 
     /* 开局 */
     @POST("game/open")
-    fun openGameAsync(@Header("X-Auth-Token") token: String): Deferred<OpenGameResponse>
+    fun openGameAsync(
+        @Header("X-Auth-Token") token: String
+    ): Deferred<OpenGameResponse>
 
     /* 出牌 */
     @POST("game/submit")
-    fun submitCardsAsync(@Header("X-Auth-Token") token: String, @Body cards: CardsDto): Deferred<SubmitResponse>
+    fun submitCardsAsync(
+        @Header("X-Auth-Token") token: String,
+        @Body cards: CardsDto
+    ): Deferred<SubmitResponse>
 
     /* 历史对局 */
     @GET("history")
@@ -47,7 +57,10 @@ interface Api {
 
     /* 对局详情 */
     @GET("history/{id}")
-    fun getHistoryDetailAsync(@Header("X-Auth-Token") token: String, @Path("id") id: Int): Deferred<HistoryDetailResponse>
+    fun getHistoryDetailAsync(
+        @Header("X-Auth-Token") token: String,
+        @Path("id") id: Int
+    ): Deferred<HistoryDetailResponse>
 
     /* 排行榜 */
     @GET("rank")
@@ -81,6 +94,13 @@ object Network {
 data class UserDto(
     val username: String,
     val password: String
+)
+
+data class RegisterDto(
+    val username: String,
+    val password: String,
+    val student_number:String,
+    val student_password:String
 )
 
 data class CardsDto(

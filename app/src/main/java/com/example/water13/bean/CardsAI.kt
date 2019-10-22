@@ -165,7 +165,7 @@ class CardsAI(val cards: MutableList<Card>) {
     fun isLiuduiban() = duiziCount == 6
 
     /* 13.三顺子 3顺子 */
-    fun isSanshunzi(): Boolean = mergedList.size == 3 && mergedList.flatten().size==13
+    fun isSanshunzi(): Boolean = mergedList.size == 3 && mergedList.flatten().size == 13
 
 
     /* 14.三同花 3同花 */
@@ -234,13 +234,14 @@ class CardsAI(val cards: MutableList<Card>) {
 
         val tempSubmit = mutableListOf<MutableList<Card>>()
 
-        cardsInFlowerOrder.filter { it.size >= 5 }.sortedByDescending { it.maxBy { it.num } }.forEach {
-            CardsAI(it).mergedList.filter { it.size == 5 }.forEach {
-                it.let {
-                    tempSubmit.add(it.toMutableList())
+        cardsInFlowerOrder.filter { it.size >= 5 }.sortedByDescending { it.maxBy { it.num } }
+            .forEach {
+                CardsAI(it).mergedList.filter { it.size == 5 }.forEach {
+                    it.let {
+                        tempSubmit.add(it.toMutableList())
+                    }
                 }
             }
-        }
         restart("同花顺", tempSubmit, true)
 
         if (zhaCount > 0) {
@@ -280,15 +281,16 @@ class CardsAI(val cards: MutableList<Card>) {
         restart("葫芦", tempSubmit, true)
 
 
-        cardsInFlowerOrder.filter { it.size >= 5 }.forEach {
-            if (tempSubmit.size < 3) {
-                tempSubmit.add(it.subList(0, 5).toMutableList())
-                refresh(tempSubmit)
+        cardsInFlowerOrder.filter { it.size >= 5 }.sortedByDescending { it.maxBy { it.num } }
+            .forEach {
+                if (tempSubmit.size < 3) {
+                    tempSubmit.add(it.subList(0, 5).toMutableList())
+                    refresh(tempSubmit)
+                }
             }
-        }
         restart("同花", tempSubmit, true)
 
-        mergedList.filter { it.size == 5 }.forEach {
+        mergedList.filter { it.size == 5 }.sortedByDescending { it.maxBy { it.num } }.forEach {
             if (tempSubmit.size < 3) {
                 tempSubmit.add(it.toMutableList())
                 refresh(tempSubmit)
@@ -343,11 +345,11 @@ class CardsAI(val cards: MutableList<Card>) {
         }
 
         var reverseMode = false
-        if(tempSubmit.filter { it.size==0 }.size==2) {
+        if (tempSubmit.filter { it.size == 0 }.size == 2) {
             reverseMode = true
         }
 
-        if(reverseMode) {
+        if (reverseMode) {
             cards.sortDescending()
         } else {
             cards.sort()

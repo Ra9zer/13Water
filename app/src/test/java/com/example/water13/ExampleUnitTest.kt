@@ -8,9 +8,7 @@ import com.example.water13.source.UserDto
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import org.junit.After
 import org.junit.Test
-import java.util.*
 
 
 /**
@@ -30,7 +28,6 @@ class ExampleUnitTest {
             val result = CardsAI(cardsString.toSortedCards().toMutableList()).solve()
             println(result)
         }
-        Scanner(System.`in`).nextLine()
     }
 
     suspend fun getCardsString(): String {
@@ -95,7 +92,7 @@ class ExampleUnitTest {
 
     @Test
     fun debug() {
-        val s ="*10 #A \$A &J \$10 *5 &2 \$J #9 *6 \$9 #K &8"
+        val s = "*10 #A \$A &J \$10 *5 &2 \$J #9 *6 \$9 #K &8"
         CardsAI(s.toSortedCards().toMutableList().toMutableList()).apply {
             solve()
         }
@@ -150,9 +147,9 @@ class ExampleUnitTest {
     fun tonghuashunZhadanTest() {
         val cardsString =
             "*7 *8 *9 " +
-                    "#2 *2 $2 &2 #6 "+
+                    "#2 *2 $2 &2 #6 " +
                     "#7 #8 #9 #10 #J"
-                    CardsAI(cardsString.toSortedCards().toMutableList().toMutableList()).apply {
+        CardsAI(cardsString.toSortedCards().toMutableList().toMutableList()).apply {
             solve()
         }
     }
@@ -161,7 +158,7 @@ class ExampleUnitTest {
     fun tonghuashunHuluTest() {
         val cardsString =
             "*7 *8 *9 " +
-                    "#2 *2 $2 &6 #6 "+
+                    "#2 *2 $2 &6 #6 " +
                     "#7 #8 #9 #10 #J"
         CardsAI(cardsString.toSortedCards().toMutableList().toMutableList()).apply {
             solve()
@@ -172,7 +169,7 @@ class ExampleUnitTest {
     fun twoHuluTest() {
         val cardsString =
             "*7 *8 *9 " +
-                    "#2 *2 $2 &6 #6 "+
+                    "#2 *2 $2 &6 #6 " +
                     "#3 *3 $3 &7 #7"
         CardsAI(cardsString.toSortedCards().toMutableList().toMutableList()).apply {
             solve()
@@ -183,9 +180,9 @@ class ExampleUnitTest {
     fun tonghuaTest() {
         val cardsString =
             "*7 *8 *9 " +
-                    "*J *K *A #K #J "+
+                    "*J *K *A #K #J " +
                     "#3 *3 $3 &2 #2"
-        CardsAI(cardsString.toSortedCards().toMutableList().toMutableList()).apply {
+        CardsAI(cardsString.toSortedCards().toMutableList()).apply {
             solve()
         }
     }
@@ -194,20 +191,30 @@ class ExampleUnitTest {
     fun liangduiTest() {
         val cardsString =
             "*7 #7 *8 " +
-                    "&8 *2 *3 #4 &6 "+
+                    "&8 *2 *3 #4 &6 " +
                     "#9 &10 &J &Q #A"
-        CardsAI(cardsString.toSortedCards().toMutableList().toMutableList()).apply {
+        CardsAI(cardsString.toSortedCards().toMutableList()).apply {
             solve()
         }
     }
 
 
-    @Test fun twoTonghuaTest() {
+    @Test
+    fun twoTonghuaTest() {
         val cardsString =
             "&10 &9 &6 " +
-                    "*A *K *J *5 *4 "+
+                    "*A *K *J *5 *4 " +
                     "#4 #6 #10 #Q #A"
-        CardsAI(cardsString.toSortedCards().toMutableList().toMutableList()).apply {
+        CardsAI(cardsString.toSortedCards().toMutableList()).apply {
+            solve()
+        }
+    }
+
+    @Test
+    fun twoTonghuaTest2() {
+        val cardsString =
+        "$7 #9 $5 $9 #7 #K \$A *3 &6 \$J *2 #4 #10"
+        CardsAI(cardsString.toSortedCards().toMutableList()).apply {
             solve()
         }
     }

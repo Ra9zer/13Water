@@ -4,6 +4,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.water13.source.Repo
 import com.example.water13.bean.User
+import com.example.water13.source.RegisterDto
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
@@ -18,6 +19,8 @@ class LoginViewModel : ViewModel() {
     val uiUsername = MutableLiveData<String>()
 
     val uiPassword = MutableLiveData<String>()
+
+    val showDialog = MutableLiveData<Boolean>()
 
     val message = MutableLiveData<String>()
 
@@ -41,9 +44,13 @@ class LoginViewModel : ViewModel() {
         if (uiUsername.value.isNullOrEmpty() || uiPassword.value.isNullOrEmpty()) {
             message.value = "账号或密码不能为空"
         } else {
-            uiScope.launch {
-                register()
-            }
+            showDialog.value = true
+        }
+    }
+
+    fun onRegisterDialogConfirm(studentNumber: String, studentPassword: String) {
+        uiScope.launch {
+            register(studentNumber, studentPassword)
         }
     }
 
@@ -57,10 +64,11 @@ class LoginViewModel : ViewModel() {
         }
     }
 
-    private suspend fun register() {
+    private suspend fun register(studentNumber:String,studentPassword:String) {
         try {
-            Repo.register(User(uiUsername.value!!, uiPassword.value!!))
+            Repo.register2(RegisterDto(uiUsername.value!!, uiPassword.value!!,studentNumber,studentPassword))
             message.postValue("注册成功")
+            showDialog.postValue(false)
         } catch (e: Exception) {
             message.postValue(e.message)
         }

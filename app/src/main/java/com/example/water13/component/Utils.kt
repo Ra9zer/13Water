@@ -40,7 +40,7 @@ fun Fragment.toastUiThread(content: String?) {
 
 @BindingAdapter("formatted_time")
 fun TextView.showFormattedTime(timeStamp: Int) {
-    this.text = SimpleDateFormat("yyyy/MM/dd hh:mm", Locale.getDefault()).format(timeStamp * 1000L)
+    this.text = SimpleDateFormat("yyyy/MM/dd HH:mm", Locale.getDefault()).format(timeStamp * 1000L)
 }
 
 fun loadPoker(context: Context, imageList: List<String>, viewList: List<ImageView>) {

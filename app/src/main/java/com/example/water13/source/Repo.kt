@@ -43,9 +43,16 @@ object Repo {
         User.instance = User()
     }
 
+    @Deprecated(message = "use register2 instead")
     suspend fun register(newUser: User) {
         withCatch {
             Network.api.registerAsync(newUser.toDto()).await()
+        }
+    }
+
+    suspend fun register2(newUserWithJwch: RegisterDto) {
+        withCatch {
+            Network.api.register2Async(newUserWithJwch).await()
         }
     }
 
